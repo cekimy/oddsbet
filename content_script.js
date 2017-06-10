@@ -68,23 +68,16 @@ function calc(arr, avg, ratio) {
     return Math.round(S / l / 0.0001 * 100) / 100;
 }
 
-function addDom(w, d, l, fw, fd, fl) {
-    let tr1 = document.createElement("tr"), tr2 = document.createElement("tr");
-    tr1.className = "checknow";
-    tr2.className = "checknow";
-    tr1.innerHTML = '<td class="lb rb"></td><td bgcolor="#F2F2F2" class="rb">初盘离散值</td><td>' + fw + '</td><td>' + fd + '</td><td class="rb">' + fl + '</td><td colspan="9" class="rb"></td>';
-    tr2.innerHTML = '<td class="lb rb"></td><td bgcolor="#F2F2F2" class="rb">即时离散值</td><td>' + w + '</td><td>' + d + '</td><td class="rb">' + l + '</td><td colspan="9" class="rb"></td>';
-    avgNode.parentNode.appendChild(tr1);
-    avgNode.parentNode.appendChild(tr2);
+function changeValue(w, d, l, fw, fd, fl) {
+    document.getElementById('lisanwinF').innerText = fw;
+    document.getElementById('lisandrawF').innerText = fd;
+    document.getElementById('lisanloseF').innerText = fl;
+    document.getElementById('lisanwinR').innerText = w;
+    document.getElementById('lisandrawR').innerText = d;
+    document.getElementById('lisanloseR').innerText = l;
 }
 
 function reload() {
-    let dom = document.querySelectorAll('.checknow');
-    if (dom.length > 0) {
-        [].forEach.call(dom, el => {
-            avgNode.parentNode.removeChild(el);
-        });
-    }
     let data = spider();
 
     let win_d = calc(data.companys.win, data.avg.win, data.percent.win),
@@ -94,12 +87,44 @@ function reload() {
         fdraw_d = calc(data.companys.fdraw, data.avg.fdraw, data.percent.fdraw),
         flose_d = calc(data.companys.flose, data.avg.flose, data.percent.flose);
 
-    addDom(win_d, draw_d, lose_d, fwin_d, fdraw_d, flose_d);
+    changeValue(win_d, draw_d, lose_d, fwin_d, fdraw_d, flose_d);
 }
 
-reload();
 
-inject();
+(function init() {
+    inject();
+    avgNode.parentNode.removeChild(avgNode.parentNode.firstChild);
+    avgNode.parentNode.firstChild.nextSibling.lastChild.previousSibling.innerText = '离散值';
+    avgNode.parentNode.firstChild.nextSibling.lastChild.previousSibling.setAttribute('colspan', 3);
+    document.getElementById('highFObj').lastChild.previousSibling.setAttribute('colspan', 3);
+    document.getElementById('lowFObj').lastChild.previousSibling.setAttribute('colspan', 3);
+    document.getElementById('avgFObj').lastChild.previousSibling.remove();
+    let td1 = createTD();
+    td1.setAttribute('id', 'lisanwinF');
+    document.getElementById('avgFObj').appendChild(td1);
+    let td2 = createTD();
+    td2.setAttribute('id', 'lisandrawF');
+    document.getElementById('avgFObj').appendChild(td2);
+    let td3 = createTD();
+    td3.setAttribute('id', 'lisanloseF');
+    td3.className = 'rb';
+    document.getElementById('avgFObj').appendChild(td3);
+    let td4 = createTD();
+    td4.setAttribute('id', 'lisanwinR');
+    document.getElementById('avgRObj').appendChild(td4);
+    let td5 = createTD();
+    td5.setAttribute('id', 'lisandrawR');
+    document.getElementById('avgRObj').appendChild(td5);
+    let td6 = createTD();
+    td6.setAttribute('id', 'lisanloseR');
+    td6.className = 'rb';
+    document.getElementById('avgRObj').appendChild(td6);
+    reload();
+})();
+
+function createTD() {
+    return document.createElement("td");
+}
 
 function inject() {
     let elem = document.createElement('script');
