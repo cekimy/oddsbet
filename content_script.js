@@ -131,8 +131,10 @@ function inject() {
     elem.type = 'text/javascript';
     elem.innerHTML = "" +
         'var link = document.getElementById("div_companySelect").getElementsByTagName("a");' +
-        'for (var i = 0, len = link.length; i < len; i++) {' +
-            'link[i].addEventListener("click", function() {' +
+        'var btn = document.getElementsByClassName("sbtn");' +
+        'for (var i = 0, len = link.length, l = btn.length; i < len + l; i++) {' +
+            'var node = i < len ? link[i] : btn[i - len];' +
+            'node.addEventListener("click", function() {' +
                 'window.postMessage({ type: "FROM_PAGE", text: "Hello from the webpage!" }, "*");' +
             '}, false);' +
         '}';
