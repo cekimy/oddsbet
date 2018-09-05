@@ -2,12 +2,12 @@
     "manifest_version": 2,
 
     "name": "球探比分网离散值",
-    "description": "给球探比分网(http://live.titan007.com/)足球欧赔页面增加凯利指数离散值",
+    "description": "给球探比分网(http://www.win0168.com//)足球欧赔页面增加凯利指数离散值",
     "version": "0.1",
 
     "permissions": [
         "tabs",
-        "http://op1.win007.com/"
+        "http://vip.win0168.com/"
     ],
 
     "background": {
