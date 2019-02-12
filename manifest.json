@@ -7,7 +7,8 @@
 
     "permissions": [
         "tabs",
-        "http://vip.win0168.com/"
+        "http://vip.win0168.com/",
+        "http://op1.win007.com/"
     ],
 
     "background": {
